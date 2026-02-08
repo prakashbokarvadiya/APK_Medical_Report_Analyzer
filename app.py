@@ -24,7 +24,12 @@ import hashlib
 # Load environment variables
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="static",
+    template_folder="templates"
+)
+
 app.secret_key = os.environ.get("SECRET_KEY", "your-secret-key-change-this")
 CORS(app, supports_credentials=True)
 
