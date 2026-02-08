@@ -57,15 +57,7 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "categories": ["health", "medical", "productivity"],
-  "screenshots": [
-    {
-      "src": "/static/screenshots/screenshot1.png",
-      "sizes": "540x720",
-      "type": "image/png"
-    }
-  ],
+    ],
   "shortcuts": [
     {
       "name": "Upload Report",
@@ -73,13 +65,6 @@
       "description": "Upload a new medical report",
       "url": "/?action=upload",
       "icons": [{ "src": "/static/icons/upload-icon.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "New Chat",
-      "short_name": "Chat",
-      "description": "Start a new chat",
-      "url": "/?action=new-chat",
-      "icons": [{ "src": "/static/icons/chat-icon.png", "sizes": "96x96" }]
     }
   ],
   "prefer_related_applications": false
