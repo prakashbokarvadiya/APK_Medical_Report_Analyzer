@@ -863,5 +863,43 @@ def health_check():
             'message': str(e)
         }), 500
 
+        
+# ── 1. Offline page route ────────────────────────────────────
+@app.route('/offline')
+def offline_page():
+    """Shown by Service Worker when user has no internet."""
+    return render_template('offline.html')
+
+
+# ── 2. Service Worker route (root scope zaroori hai) ─────────
+@app.route('/sw.js')
+def service_worker():
+    """
+    SW must be served from root path so its scope covers the whole app.
+    Flask static folder se serve karna kaam nahi karta agar
+    static_url_path = '/static' ho.
+    """
+    from flask import send_from_directory
+    response = send_from_directory(app.static_folder, 'sw.js')
+    # No caching — browser always checks for new SW version
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Service-Worker-Allowed'] = '/'
+    return response
+
+
+# ── 3. assetlinks.json route (TWA / URL bar hide) ────────────
+@app.route('/.well-known/assetlinks.json')
+def asset_links():
+    """
+    Google Play Store TWA verification.
+    Isse domain verify hota hai aur URL bar hide hoti hai.
+    assetlinks.json file static/ folder me rakh do.
+    """
+    from flask import send_from_directory
+    return send_from_directory(
+        app.static_folder,
+        'assetlinks.json',
+        mimetype='application/json'
+    )
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
